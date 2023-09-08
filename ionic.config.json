@@ -1,0 +1,7 @@
+{
+  "name": "mYaplicacionton",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

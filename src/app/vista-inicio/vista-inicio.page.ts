@@ -7,9 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./vista-inicio.page.scss'],
 })
 export class VistaInicioPage implements OnInit {
-
+  
   msg : string="";
-  data = null;
+  
   constructor(private activateroute: ActivatedRoute, private router: Router){
     const navigation = this.router.getCurrentNavigation();
   

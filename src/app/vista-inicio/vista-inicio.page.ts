@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class VistaInicioPage implements OnInit {
   
   msg : string="";
-  
+  data : string="";
   constructor(private activateroute: ActivatedRoute, private router: Router){
     const navigation = this.router.getCurrentNavigation();
   

@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'vista-inicio',
+    loadChildren: () => import('./vista-inicio/vista-inicio.module').then( m => m.VistaInicioPageModule)
+  },
+  {
+    path: 'restablecer-contra',
+    loadChildren: () => import('./restablecer-contra/restablecer-contra.module').then( m => m.RestablecerContraPageModule)
+  },
 ];
 
 @NgModule({

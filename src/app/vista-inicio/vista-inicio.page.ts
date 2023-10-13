@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './vista-inicio.page.html',
   styleUrls: ['./vista-inicio.page.scss'],
 })
+
 export class VistaInicioPage implements OnInit {
   
   msg : string="";
@@ -15,6 +16,7 @@ export class VistaInicioPage implements OnInit {
   
     
     this.activateroute.paramMap.subscribe(params =>{
+      // navigation?.extras?.state
       if(navigation && navigation.extras && navigation.extras.state){
         this.msg = JSON.stringify(navigation.extras.state);
       }else{
@@ -24,10 +26,76 @@ export class VistaInicioPage implements OnInit {
       
       
     });
-  
+
   } 
     ngOnInit() {
     }
   
   }
   
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

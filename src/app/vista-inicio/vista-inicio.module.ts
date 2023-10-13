@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { VistaInicioPageRoutingModule } from './vista-inicio-routing.module';
-
 import { VistaInicioPage } from './vista-inicio.page';
+
 
 @NgModule({
   imports: [
@@ -15,6 +15,7 @@ import { VistaInicioPage } from './vista-inicio.page';
     IonicModule,
     VistaInicioPageRoutingModule
   ],
-  declarations: [VistaInicioPage]
+  declarations: [VistaInicioPage],
+  
 })
 export class VistaInicioPageModule {}

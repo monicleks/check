@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'restablecer-contra',
     loadChildren: () => import('./restablecer-contra/restablecer-contra.module').then( m => m.RestablecerContraPageModule)
   },
+  {
+    path: 'ubicacion',
+    loadChildren: () => import('./ubicacion/ubicacion.module').then( m => m.UbicacionPageModule)
+  },
 ];
 
 @NgModule({

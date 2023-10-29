@@ -17,6 +17,25 @@
     <capacitor-google-map #map class="google-map"></capacitor-google-map>
  </ion-content>
 
+ <ion-content>
+  <ion-button expand="full" (click)="getCurrentLocation()">Obtener Ubicación</ion-button>
+  <ion-card *ngIf="latitude && longitude">
+    <ion-card-header>
+      Ubicación Actual
+    </ion-card-header>
+    <ion-card-content>
+      Latitud: {{ latitude }}
+      <br>
+      Longitud: {{ longitude }}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+
+
+
+
+
 
 
 

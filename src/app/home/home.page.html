@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="Cambio">
     <ion-title>
-      Inicio
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,27 +9,26 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">ING-Inicio</ion-title>
+      <ion-title size="large" class="animated-title">ING-Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
- 
+
   
+  
+
   <ion-item>
-    <ion-label position="floating"> RUT </ion-label>
-    <ion-input  [(ngModel)]="formLogin.rut" placeholder="ingrese rut"></ion-input>
+    <ion-label position="floating" class="input-label">RUT</ion-label>
+    <ion-input [(ngModel)]="formLogin.rut" placeholder="Ingrese RUT" class="input-field"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating"> Contraseña </ion-label>
-    <ion-input [(ngModel)]="formLogin.password" type="password" placeholder="ingrese rut"></ion-input>
-
+    <ion-label position="floating" class="input-label">Contraseña</ion-label>
+    <ion-input [(ngModel)]="formLogin.password" type="password" placeholder="Ingrese contraseña" class="input-field"></ion-input>
   </ion-item>
 
+  <ion-button (click)="openWithExtras()" [routerLink]="['/vista-inicio']" class="login-button">
+    <span>Entrar</span>
+  </ion-button>
 
-  <ion-button (click)="openWithExtras()" [routerLink]="['/vista-inicio']">Entrar</ion-button>
-
-  <ion-button [routerLink]="['/restablecer-contra']">Recuperar Contrasena</ion-button>
-  
-  
-  
+  <ion-button [routerLink]="['/restablecer-contra']">Recuperar Contraseña</ion-button>
 </ion-content>

@@ -21,7 +21,8 @@ const routes: Routes = [
   {
     path: 'vista-inicio',
     loadChildren: () => import('./vista-inicio/vista-inicio.module').then( m => m.VistaInicioPageModule),
-    canActivate:[ProteccionGuard]
+    canActivate: [ProteccionGuard]
+    
   },
   {
     path: 'restablecer-contra',
@@ -31,17 +32,17 @@ const routes: Routes = [
   {
     path: 'ubicacion',
     loadChildren: () => import('./ubicacion/ubicacion.module').then( m => m.UbicacionPageModule),
-    canActivate:[ProteccionGuard]
+    canActivate: [ProteccionGuard]
   },
   {
     path: 'entrada',
     loadChildren: () => import('./entrada/entrada.module').then( m => m.EntradaPageModule),
-    canActivate:[ProteccionGuard]
+    canActivate: [ProteccionGuard]
   },
   {
     path: 'salida',
     loadChildren: () => import('./salida/salida.module').then( m => m.SalidaPageModule),
-    canActivate:[ProteccionGuard]
+    canActivate: [ProteccionGuard]
   },
   {
     path: 'not-found',

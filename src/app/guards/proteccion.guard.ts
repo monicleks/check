@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProteccionGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private storage: Storage) {}
 
-  canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
-    const requestedUrl = route.url.join('/'); // Obtén la URL solicitada como una cadena
-
-    const allowedRoutes = this.router.config
-      .filter(route => route.path !== undefined) // Filtra las rutas definidas
-      .map(route => route.path); // Obtiene solo los paths de las rutas definidas
-
-    if (allowedRoutes.includes(requestedUrl)) {
-      return true; // Permite el acceso a las rutas permitidas
-    } else {
-      this.router.navigate(['/not-found']); // Redirige a la página de error si la ruta no está en la lista
-      return false;
-    }
+  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Promise<boolean> {
+    return this.storage.get('loginData').then((loginData) => {
+      if (loginData && loginData.rut && loginData.password) {
+        // Si existen datos de inicio de sesión válidos en el almacenamiento, el usuario está autenticado
+        console.log('El usuario está autenticado.');
+        return true;
+      } else {
+        // Si no existen datos de inicio de sesión válidos, redirige al inicio de sesión ('home')
+        console.log('El usuario no está autenticado.');
+        this.router.navigate(['/home']);
+        return false;
+      }
+    });
   }
 }

@@ -45,6 +45,11 @@ const routes: Routes = [
     canActivate: [ProteccionGuard]
   },
   {
+    path: 'confi',
+    loadChildren: () => import('./confi/confi.module').then( m => m.ConfiPageModule),
+    canActivate: [ProteccionGuard]
+  },
+  {
     path: 'not-found',
     loadChildren: () => import('./page/not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
@@ -52,7 +57,7 @@ const routes: Routes = [
     path:'**',
     redirectTo: 'not-found',
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({

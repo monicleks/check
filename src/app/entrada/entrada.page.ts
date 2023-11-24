@@ -1,59 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage-angular';
-import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-entrada',
   templateUrl: './entrada.page.html',
   styleUrls: ['./entrada.page.scss'],
 })
-export class EntradaPage implements OnInit {
+export class EntradaPage {
   imageSource: any;
-  userData: any = {}; // Para almacenar los datos del usuario
-  rutToAssociate: string = ''; // Para capturar el Rut ingresado por el usuario
 
-  constructor(
-    private domSanitizer: DomSanitizer,
-    private storage: Storage
-  ) {}
-
-  async ngOnInit() {
-    // Recuperar los datos de inicio de sesión del almacenamiento local
-    this.userData = await this.storage.get('loginData');
-  }
+  constructor(private storage: Storage) {}
 
   takePicture = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Prompt,
-      saveToGallery: true, // Guarda la imagen en la galería
-    });
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Prompt,
+        saveToGallery: false,
+      });
 
-    if (image && image.path) {
-      // Obtener la URL de la imagen guardada en la galería
-      const imageUrl = Capacitor.convertFileSrc(image.path);
+      this.imageSource = image.webPath ? image.webPath : "";
 
-      // Actualizar la propiedad imageSource para mostrar la previsualización
-      this.imageSource = this.domSanitizer.bypassSecurityTrustUrl(imageUrl);
-    } else {
-      console.error('Error al capturar la imagen.');
+      console.log('Imagen capturada con éxito:', this.imageSource);
+
+      // Obtener los datos actuales de loginData del almacenamiento local
+      const loginData = await this.storage.get('loginData') || { rut: '', password: '', imageURL: '' };
+
+      // Actualizar los datos de rut, contraseña e imageURL
+      loginData.rut = 'xx'; // Actualiza el rut según tu lógica
+      loginData.password = 'xx'; // Actualiza la contraseña según tu lógica
+      loginData.imageURL = this.imageSource;
+
+      // Guardar el objeto loginData actualizado en el almacenamiento local
+      await this.storage.set('loginData', loginData);
+    } catch (error) {
+      console.error('Error al capturar la imagen:', error);
     }
   }
 
-  sendPhoto = async () => {
-    // Verificar que se haya ingresado un Rut antes de asociar la imagen
-    if (this.rutToAssociate) {
-      // Guardar la imagen en el almacenamiento local con el Rut del usuario como clave
-      await this.storage.set(this.rutToAssociate, this.imageSource);
-
-      // Mostrar un mensaje de éxito o redirigir a otra página
-      console.log('Imagen asociada con éxito al Rut:', this.rutToAssociate);
-    } else {
-      console.error('Debes ingresar un Rut para asociar la imagen.');
-    }
+  getPhoto() {
+    return this.imageSource;
   }
 }

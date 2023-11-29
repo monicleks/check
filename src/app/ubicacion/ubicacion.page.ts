@@ -48,6 +48,6 @@ export class UbicacionPage {
     const coordinates = await Geolocation.getCurrentPosition();
     this.latitude = coordinates.coords.latitude;
     this.longitude = coordinates.coords.longitude;
-    this.createMap(); // Llamar a createMap para centrar el mapa en la ubicación actual
+    this.createMap();
   }
 }

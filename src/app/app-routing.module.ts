@@ -42,6 +42,16 @@ const routes: Routes = [
     canActivate: [ProteccionGuard],
   },
   {
+    path: 'pokemons',
+    loadChildren: () => import('./pokemons/pokemons.module').then( m => m.PokemonsPageModule),
+    canActivate: [ProteccionGuard],
+  },
+  {
+    path: 'historial-registro',
+    loadChildren: () => import('./historial-registro/historial-registro.module').then( m => m.HistorialRegistroPageModule),
+    canActivate: [ProteccionGuard],
+  },
+  {
     path: 'not-found',
     loadChildren: () => import('./page/not-found/not-found.module').then((m) => m.NotFoundPageModule),
   },

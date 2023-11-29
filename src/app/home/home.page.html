@@ -24,7 +24,7 @@
   </ion-item>
 
   
-  <ion-button [routerLink]="formLogin.rut.length >= 6 && formLogin.password.length >= 6 ? '/vista-inicio' : ''" (click)="openWithExtras()" class="login-button">
+  <ion-button [routerLink]="formLogin.rut.length >= 6 && formLogin.password.length >= 6 ? '/vista-inicio' : '' " (click)="openWithExtras()" class="login-button">
     <span>Entrar</span>
   </ion-button>
 

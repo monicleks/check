@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Storage } from '@ionic/storage-angular';
+import { ToastController } from '@ionic/angular';
+import { RegistroHistoricoService } from '../services/regristo-historico.service';
 
 @Component({
   selector: 'app-salida',
@@ -10,7 +12,11 @@ import { Storage } from '@ionic/storage-angular';
 export class SalidaPage {
   imageSource: any;
 
-  constructor(private storage: Storage) {}
+  constructor(
+    private storage: Storage,
+    public toastController: ToastController,
+    private registroHistoricoService: RegistroHistoricoService
+  ) {}
 
   takePicture = async () => {
     try {
@@ -29,13 +35,17 @@ export class SalidaPage {
       // Obtener los datos actuales de loginData del almacenamiento local
       const loginData = await this.storage.get('loginData') || { rut: '', password: '', imageURL: '' };
 
-      // Actualizar los datos de rut, contraseña e imageURL
-      loginData.rut = 'xx'; // Actualiza el rut según tu lógica
-      loginData.password = 'xx'; // Actualiza la contraseña según tu lógica
+      // Solo actualizar la propiedad imageURL
       loginData.imageURL = this.imageSource;
 
       // Guardar el objeto loginData actualizado en el almacenamiento local
       await this.storage.set('loginData', loginData);
+
+      // Registrar salida en el historial
+      this.registroHistoricoService.addSalida(loginData.rut);
+
+      // Mostrar un mensaje con la hora de salida
+      this.presentToast(`Hora de salida: ${new Date().toLocaleTimeString()}`);
     } catch (error) {
       console.error('Error al capturar la imagen:', error);
     }
@@ -43,5 +53,25 @@ export class SalidaPage {
 
   getPhoto() {
     return this.imageSource;
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 5000, // Duración en milisegundos
+      position: 'bottom',
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    toast.present();
+  }
+
+  registerExit() {
+    console.log('Salida registrada');
   }
 }

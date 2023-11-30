@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      elige tu pokemon favorito 
+      Pokedex
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,32 +9,31 @@
 <ion-content>
   <ion-searchbar (ionInput)="searchPokemon($event)"></ion-searchbar>
 
-  
   <ion-button expand="full" color="light" (click)="clearSearchResults()" *ngIf="filteredPokemonList.length > 0 && !selectedPokemon">
     Clear Results
   </ion-button>
 
   <ion-list *ngIf="!selectedPokemon">
-    <ion-item *ngFor="let pokemon of filteredPokemonList">
-      <ion-thumbnail slot="start">
-        <img [src]="getPokemonImage(pokemon.url)" alt="{{pokemon.name}}"/>
-      </ion-thumbnail>
+    <ion-item *ngFor="let pokemon of filteredPokemonList" (click)="selectPokemon(pokemon)">
       <ion-label>
-        <h2 (click)="selectPokemon(pokemon)">{{ pokemon.name }}</h2>
+        <h2>{{ pokemon.name }}</h2>
         <p>Click to select</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-card *ngIf="selectedPokemon">
+  <ion-card *ngIf="selectedPokemon" class="pokemon-card-content">
     <ion-card-header>
       <ion-card-title>{{ selectedPokemon.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <img [src]="selectedPokemon.image" alt="{{selectedPokemon.name}}"/>
-      
-
-      <ion-button expand="full" color="danger" (click)="deletePokemon()">Borrar Pokémon</ion-button>
+      <ng-container *ngIf="selectedPokemon.id; else noIdTemplate">
+        <img [src]="getPokemonImage(selectedPokemon.id)" alt="{{ selectedPokemon.name }}" />
+      </ng-container>
+      <ng-template #noIdTemplate>
+        <p>No se puede mostrar la imagen porque no se ha seleccionado un Pokémon válido.</p>
+      </ng-template>
     </ion-card-content>
-  </ion-card>
+    <ion-button expand="full" color="danger" (click)="deletePokemon()">Borrar Pokémon</ion-button>
+  </ion-card>  
 </ion-content>

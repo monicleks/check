@@ -1,7 +1,6 @@
-// pokemons.page.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { PokemonService } from '../services/pokemon.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemons',
@@ -9,22 +8,28 @@ import { PokemonService } from '../services/pokemon.service';
   styleUrls: ['./pokemons.page.scss'],
 })
 export class PokemonsPage implements OnInit {
-
   pokemonList: any[] = [];
   filteredPokemonList: any[] = [];
-  selectedPokemon: any;
+  selectedPokemon: any = null;
 
-  constructor(private pokemonService: PokemonService, private route: ActivatedRoute) { }
+  constructor(private pokemonService: PokemonService) {}
 
   ngOnInit() {
     this.getAllPokemon();
   }
 
   getAllPokemon() {
-    this.pokemonService.getAllPokemon().subscribe((data: any) => {
-      this.pokemonList = data.results;
-      this.filteredPokemonList = this.pokemonList;
-    });
+    this.pokemonService.getAllPokemon().pipe(
+      catchError((error) => {
+        console.error('Error fetching Pokemon list:', error);
+        return [];
+      })
+    ).subscribe(
+      (data: any) => {
+        this.pokemonList = data.results;
+        this.filteredPokemonList = this.pokemonList;
+      }
+    );
   }
 
   searchPokemon(event: any) {
@@ -40,14 +45,21 @@ export class PokemonsPage implements OnInit {
   }
 
   getPokemonDetails(pokemon: any) {
-    this.pokemonService.getPokemonDetails(pokemon.url).subscribe((details: any) => {
-      this.selectedPokemon = { ...details, image: this.getPokemonImage(details.sprites.front_default) };
-    });
+    this.pokemonService.getPokemonDetails(pokemon.url).pipe(
+      catchError((error) => {
+        console.error('Error fetching Pokemon details:', error);
+        return [];
+      })
+    ).subscribe(
+      (details: any) => {
+        this.selectedPokemon = { ...details, name: pokemon.name };
+      }
+    );
   }
-
-  getPokemonImage(imageUrl: string): string {
-    return imageUrl;
+  getPokemonImage(pokemonId: number): string {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
   }
+  
 
   clearSearchResults() {
     this.filteredPokemonList = [];

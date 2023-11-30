@@ -44,7 +44,7 @@ const routes: Routes = [
   {
     path: 'pokemons',
     loadChildren: () => import('./pokemons/pokemons.module').then( m => m.PokemonsPageModule),
-    canActivate: [ProteccionGuard],
+    
   },
   {
     path: 'historial-registro',
